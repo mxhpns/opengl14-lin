@@ -47,7 +47,17 @@ void cam_do_movement(Cam *cam, float delta_time) {
     }
 }
 
+#include <stdio.h>
 void cam_motion(Cam *cam, int mx, int my, int the_w, int the_h, float sensitivity) {
+    //printf("%d %d\n", mx, my);
+    static int warped = 0;
+    if (warped) {
+        //printf("miss\n");
+        if (mx != cam->last_x || my != cam->last_y) {
+            return;
+        }
+        warped = 0;
+    }
     if (the_w == 0) {
         return;
     }
@@ -84,7 +94,9 @@ void cam_motion(Cam *cam, int mx, int my, int the_w, int the_h, float sensitivit
         my < margin || my > the_h - margin) {
         cam->last_x = the_w / 2;
         cam->last_y = the_h / 2;
+        warped = 1;
         glutWarpPointer(cam->last_x, cam->last_y);
+        //printf("changed: %d %d %d %d\n", mx, my, cam->last_x, cam->last_y);
     }
 }
 

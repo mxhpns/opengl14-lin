@@ -158,7 +158,7 @@ void display() {
 
     mat4 view;
     cam_view(&cam, view);
-    glUniformMatrix4fv(viewLoc, 1, GL_FALSE, view);
+    glUniformMatrix4fv(viewLoc, 1, GL_FALSE, (GLfloat *)view);
 
     float step = 40.0f;
     for (int i = -5; i <= 5; i++) {
@@ -169,7 +169,7 @@ void display() {
                 mat4 trans;
                 m_translate_matr(i * step, j * step, k * step, trans);
                 m_mat4_mul(trans, model, model);
-                glUniformMatrix4fv(modelLoc, 1, GL_FALSE, model);
+                glUniformMatrix4fv(modelLoc, 1, GL_FALSE, (GLfloat*)model);
 
                 glDrawElements(GL_TRIANGLES, 36, GL_UNSIGNED_SHORT, 0);
             }
@@ -194,7 +194,7 @@ void reshape(int w, int h) {
     mat4 projection;
     m_perspective(fovy, aspect, nearVal, farVal, projection);
     glUseProgram(prog);
-    glUniformMatrix4fv(projectionLoc, 1, GL_FALSE, projection);
+    glUniformMatrix4fv(projectionLoc, 1, GL_FALSE, (GLfloat*)projection);
     glUseProgram(0);
     glViewport(0, 0, (GLsizei)w, (GLsizei)h);
 }
@@ -232,14 +232,7 @@ void keyboard_release(unsigned char key, int x, int y) {
     }
 }
 
-/*
-int WINAPI wWinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, PWSTR pCmdLine, int nCmdShow) {
-    main(__argc, __argv);
-    return 0;
-}
-*/
-
-int motion(int mx, int my) {
+void motion(int mx, int my) {
     cam_motion(&cam, mx, my, the_w, the_h, 0.10f);
 }
 
