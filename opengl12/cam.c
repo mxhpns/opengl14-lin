@@ -56,8 +56,8 @@ void cam_motion(Cam *cam, int mx, int my, int the_w, int the_h, float sensitivit
         cam->last_x = mx;
         cam->last_y = my;
     }
-    float offset_x = mx - cam->last_x;
-    float offset_y = cam->last_y - my;
+    float offset_x = (float)(mx - cam->last_x);
+    float offset_y = (float)(cam->last_y - my);
     cam->last_x = mx;
     cam->last_y = my;
 
@@ -82,8 +82,8 @@ void cam_motion(Cam *cam, int mx, int my, int the_w, int the_h, float sensitivit
     int margin = 100;
     if (mx < margin || mx > the_w - margin ||
         my < margin || my > the_h - margin) {
-        cam->last_x = the_w / 2.0f;
-        cam->last_y = the_h / 2.0f;
+        cam->last_x = the_w / 2;
+        cam->last_y = the_h / 2;
         glutWarpPointer(cam->last_x, cam->last_y);
     }
 }

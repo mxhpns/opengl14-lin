@@ -13,8 +13,8 @@ typedef struct {
     int right_activated;
     float yaw;
     float pitch;
-    float last_x;
-    float last_y;
+    int last_x;
+    int last_y;
     int first_mouse;
 } Cam;
 
